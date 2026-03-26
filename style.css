@@ -1,0 +1,413 @@
+/* === CSS Variables for Theming === */
+:root {
+    /* Colors */
+    --primary-gradient: linear-gradient(135deg, #3B82F6 0%, #14B8A6 100%);
+    --primary-color: #3B82F6;
+    
+    /* Dark Mode (Default) */
+    --bg-color: #0F172A;
+    --text-color: #F8FAFC;
+    --text-muted: #94A3B8;
+    --glass-bg: rgba(30, 41, 59, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --card-hover-bg: rgba(30, 41, 59, 0.8);
+    
+    /* Layout & Utilities */
+    --border-radius: 16px;
+    --transition: all 0.3s ease;
+    --font-main: 'Inter', sans-serif;
+}
+
+[data-theme="light"] {
+    --bg-color: #F8FAFC;
+    --text-color: #0F172A;
+    --text-muted: #475569;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --card-hover-bg: rgba(255, 255, 255, 0.9);
+}
+
+/* === Global Reset & Typography === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: var(--transition);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Typography */
+.gradient-text {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+}
+
+.text-center { text-align: center; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+
+/* === Glassmorphism Utility === */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* === Buttons === */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--text-color);
+}
+
+.btn-outline:hover {
+    background: var(--primary-gradient);
+    color: #fff;
+    border-color: transparent;
+}
+
+.btn-icon {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.btn-icon:hover {
+    transform: scale(1.1);
+}
+
+/* === Navigation === */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1rem 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.75rem;
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    display: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* === Hero Section === */
+.hero {
+    padding-top: 120px;
+    padding-bottom: 60px;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+}
+
+/* === Search Bar === */
+.search-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.search-field {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.search-field label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.search-field input, .search-field select {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    outline: none;
+    transition: var(--transition);
+}
+
+.search-field input:focus, .search-field select:focus {
+    border-color: var(--primary-color);
+}
+
+/* === Map Section === */
+.map-section {
+    padding: 40px 0;
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.map-container {
+    height: 400px;
+    width: 100%;
+    z-index: 1; /* Keep leaflet controls below navbar */
+}
+
+/* === Listings Section === */
+.listings-section {
+    padding: 40px 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.car-card {
+    padding: 1.5rem;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+    background: var(--card-hover-bg);
+}
+
+.car-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.car-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.car-price {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--primary-color);
+}
+
+.car-location {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* === Dashboard === */
+.dashboard-section {
+    padding: 40px 0;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.dashboard-card {
+    padding: 2rem;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+/* === Footer === */
+.footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--glass-border);
+    margin-top: 4rem;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+/* === Modal === */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    position: relative;
+    padding: 3rem 2rem;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    animation: slideUp 0.3s ease;
+}
+
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.close-modal:hover {
+    color: var(--text-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* === Responsive Media Queries === */
+@media (min-width: 768px) {
+    .nav-links {
+        display: flex;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+    }
+
+    .search-bar {
+        flex-direction: row;
+        align-items: flex-end;
+    }
+    
+    .search-field {
+        flex: 1;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
