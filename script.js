@@ -114,42 +114,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === Search Functionality ===
     const btnSearch = document.getElementById('btnSearch');
-    btnSearch.addEventListener('click', () => {
-        const locationQuery = document.getElementById('searchLocation').value.toLowerCase();
-        const typeQuery = document.getElementById('searchType').value;
+    if (btnSearch) {
+        btnSearch.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent any form submission or unexpected default behavior
+            try {
+                const locationInput = document.getElementById('searchLocation');
+                const locationQuery = locationInput ? locationInput.value.toLowerCase() : '';
+                
+                const typeInput = document.getElementById('searchType');
+                const typeQuery = typeInput ? typeInput.value : 'all';
 
-        const filteredCars = carData.filter(car => {
-            const matchLocation = car.location.toLowerCase().includes(locationQuery);
-            const matchType = typeQuery === 'all' || car.type === typeQuery;
-            return matchLocation && matchType;
+                const filteredCars = carData.filter(car => {
+                    const matchLocation = car.location.toLowerCase().includes(locationQuery);
+                    const matchType = typeQuery === 'all' || car.type === typeQuery;
+                    return matchLocation && matchType;
+                });
+
+                renderCars(filteredCars);
+                
+                // Scroll to results
+                const exploreSection = document.getElementById('explore');
+                if(exploreSection) {
+                    exploreSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (err) {
+                console.error("Search functionality error:", err);
+            }
         });
-
-        renderCars(filteredCars);
-        
-        // Scroll to results
-        document.getElementById('explore').scrollIntoView({ behavior: 'smooth' });
-    });
+    }
 
     // === Interactive Map (Leaflet.js) ===
-    // Center map on Cyprus
-    const map = L.map('map').setView([35.0, 33.0], 8);
+    try {
+        // Center map on Cyprus
+        const map = L.map('map').setView([35.0, 33.0], 8);
 
-    // Add Dark Matter tile layer for premium look (suitable for dark theme)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 20
-    }).addTo(map);
+        // Add Dark Matter tile layer for premium look (suitable for dark theme)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20
+        }).addTo(map);
 
-    // Custom Marker Icon (Optional, using default for simplicity but stylized)
-    // Add markers for each car
-    carData.forEach(car => {
-        const marker = L.marker(car.coords).addTo(map);
-        marker.bindPopup(`<b>${car.make}</b><br>€${car.price}/day<br>${car.location}`);
-    });
+        // Custom Marker Icon (Optional, using default for simplicity but stylized)
+        // Add markers for each car
+        carData.forEach(car => {
+            const marker = L.marker(car.coords).addTo(map);
+            marker.bindPopup(`<b>${car.make}</b><br>€${car.price}/day<br>${car.location}`);
+        });
+    } catch (e) {
+        console.error("Map initialization failed. This can happen when running locally via file:// due to browser security restrictions.", e);
+        const mapContainer = document.getElementById('map');
+        mapContainer.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; height:100%; color:var(--text-muted);">Interactive map requires HTTP/HTTPS to load correctly. Please upload to GitHub Pages or use a local server.</div>';
+    }
 
     // Handle map redraw on theme change (if needed for light mode map tiles, though dark map looks premium on both)
     
+    // === Initialize Flatpickr for Dates ===
+    flatpickr("#searchDate", {
+        minDate: "today",
+        dateFormat: "Y-m-d",
+        placeholder: "Select Date",
+    });
+
     // === Authentication Mock Logic ===
     const btnRegister = document.getElementById('btnRegister');
     const authModal = document.getElementById('authModal');
